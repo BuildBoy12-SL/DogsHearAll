@@ -9,6 +9,7 @@ namespace DogsHearAll
 {
     using DogsHearAll.Components;
     using Exiled.Events.EventArgs;
+    using UnityEngine;
 
     /// <summary>
     /// Handles events derived from <see cref="Exiled.Events.Handlers"/>.
@@ -19,7 +20,7 @@ namespace DogsHearAll
         public void OnDestroying(DestroyingEventArgs ev)
         {
             if (ev.Player.GameObject.TryGetComponent(out NoiseMonitor noiseMonitor))
-                noiseMonitor.Destroy();
+                Object.Destroy(noiseMonitor);
         }
 
         /// <inheritdoc cref="Exiled.Events.Handlers.Player.OnVerified(VerifiedEventArgs)"/>

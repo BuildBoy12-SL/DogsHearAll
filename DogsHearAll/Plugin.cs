@@ -21,7 +21,7 @@ namespace DogsHearAll
         public static Plugin Instance { get; private set; }
 
         /// <inheritdoc />
-        public override Version RequiredExiledVersion { get; } = new Version(3, 0, 0);
+        public override Version RequiredExiledVersion { get; } = new Version(4, 2, 2);
 
         /// <summary>
         /// Gets an instance of the <see cref="DogsHearAll.EventHandlers"/> class.

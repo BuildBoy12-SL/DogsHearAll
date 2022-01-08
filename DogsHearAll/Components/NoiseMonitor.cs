@@ -7,7 +7,6 @@
 
 namespace DogsHearAll.Components
 {
-    using System;
     using Exiled.API.Features;
     using UnityEngine;
 
@@ -17,35 +16,19 @@ namespace DogsHearAll.Components
     public class NoiseMonitor : MonoBehaviour
     {
         private Player player;
-        private Radio radio;
         private float noise;
-
-        /// <summary>
-        /// Destroys the component safely.
-        /// </summary>
-        public void Destroy()
-        {
-            try
-            {
-                Destroy(this);
-            }
-            catch (Exception e)
-            {
-                Log.Error($"Failed to destroy {nameof(NoiseMonitor)}!\n{e}");
-            }
-        }
 
         private void Awake()
         {
             player = Player.Get(gameObject);
             noise = Plugin.Instance.Config.Intensity;
-            if (player == null || !player.GameObject.TryGetComponent(out radio))
-                Destroy();
+            if (player == null)
+                Destroy(this);
         }
 
         private void FixedUpdate()
         {
-            if (player.IsHuman && (radio.UsingVoiceChat || radio.UsingRadio))
+            if (player.IsHuman && (player.Radio.UsingVoiceChat || player.Radio.UsingRadio))
                 player.ReferenceHub.footstepSync._visionController.MakeNoise(noise);
         }
     }
