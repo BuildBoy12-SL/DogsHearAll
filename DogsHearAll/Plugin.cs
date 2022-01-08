@@ -15,6 +15,8 @@ namespace DogsHearAll
     /// </summary>
     public class Plugin : Plugin<Config>
     {
+        private EventHandlers eventHandlers;
+
         /// <summary>
         /// Gets the only existing instance of the <see cref="Plugin"/> class.
         /// </summary>
@@ -23,27 +25,22 @@ namespace DogsHearAll
         /// <inheritdoc />
         public override Version RequiredExiledVersion { get; } = new Version(4, 2, 2);
 
-        /// <summary>
-        /// Gets an instance of the <see cref="DogsHearAll.EventHandlers"/> class.
-        /// </summary>
-        public EventHandlers EventHandlers { get; private set; }
-
         /// <inheritdoc />
         public override void OnEnabled()
         {
             Instance = this;
-            EventHandlers = new EventHandlers();
-            Exiled.Events.Handlers.Player.Destroying += EventHandlers.OnDestroying;
-            Exiled.Events.Handlers.Player.Verified += EventHandlers.OnVerified;
+            eventHandlers = new EventHandlers();
+            Exiled.Events.Handlers.Player.Destroying += eventHandlers.OnDestroying;
+            Exiled.Events.Handlers.Player.Verified += eventHandlers.OnVerified;
             base.OnEnabled();
         }
 
         /// <inheritdoc />
         public override void OnDisabled()
         {
-            Exiled.Events.Handlers.Player.Destroying -= EventHandlers.OnDestroying;
-            Exiled.Events.Handlers.Player.Verified -= EventHandlers.OnVerified;
-            EventHandlers = null;
+            Exiled.Events.Handlers.Player.Destroying -= eventHandlers.OnDestroying;
+            Exiled.Events.Handlers.Player.Verified -= eventHandlers.OnVerified;
+            eventHandlers = null;
             Instance = null;
             base.OnDisabled();
         }
