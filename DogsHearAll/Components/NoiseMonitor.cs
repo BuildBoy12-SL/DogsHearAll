@@ -22,14 +22,12 @@ namespace DogsHearAll.Components
         {
             player = Player.Get(gameObject);
             noise = Plugin.Instance.Config.Intensity;
-            if (player == null)
-                Destroy(this);
         }
 
         private void FixedUpdate()
         {
             if (player.IsHuman && (player.Radio.UsingVoiceChat || player.Radio.UsingRadio))
-                player.ReferenceHub.footstepSync._visionController.MakeNoise(noise);
+                player.MakeNoise(noise);
         }
     }
 }
